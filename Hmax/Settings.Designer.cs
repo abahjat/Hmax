@@ -32,7 +32,7 @@
             this.button3 = new System.Windows.Forms.Button();
             this.comboBox2 = new System.Windows.Forms.ComboBox();
             this.label3 = new System.Windows.Forms.Label();
-            this.comboBox1 = new System.Windows.Forms.ComboBox();
+            this.privKeyBox = new System.Windows.Forms.ComboBox();
             this.button2 = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
             this.listBox1 = new System.Windows.Forms.ListBox();
@@ -78,14 +78,14 @@
             this.label3.TabIndex = 19;
             this.label3.Text = "Character Range";
             // 
-            // comboBox1
+            // privKeyBox
             // 
-            this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Location = new System.Drawing.Point(84, 109);
-            this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(321, 21);
-            this.comboBox1.TabIndex = 18;
-            this.comboBox1.Text = "T514AB3X8L5MS4LN601P08ZQ4Y1N3X82HJQPWN49";
+            this.privKeyBox.FormattingEnabled = true;
+            this.privKeyBox.Location = new System.Drawing.Point(84, 109);
+            this.privKeyBox.Name = "privKeyBox";
+            this.privKeyBox.Size = new System.Drawing.Size(321, 21);
+            this.privKeyBox.TabIndex = 18;
+            this.privKeyBox.Text = "T514AB3X8L5MS4LN601P08ZQ4Y1N3X82HJQPWN49";
             // 
             // button2
             // 
@@ -143,7 +143,7 @@
             this.Controls.Add(this.button3);
             this.Controls.Add(this.comboBox2);
             this.Controls.Add(this.label3);
-            this.Controls.Add(this.comboBox1);
+            this.Controls.Add(this.privKeyBox);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.listBox1);
@@ -162,7 +162,7 @@
         private System.Windows.Forms.Button button3;
         private System.Windows.Forms.ComboBox comboBox2;
         private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.ComboBox comboBox1;
+        private System.Windows.Forms.ComboBox privKeyBox;
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.ListBox listBox1;

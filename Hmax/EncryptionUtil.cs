@@ -143,7 +143,7 @@ namespace Hmac
 
             System.Text.ASCIIEncoding encoding = new System.Text.ASCIIEncoding();
 
-            byte[] keyByte = keyAndIvBytes = UTF8Encoding.UTF8.GetBytes("tR7nR6wZHGjYMCuV"); //encoding.GetBytes(key);
+            byte[] keyByte = keyAndIvBytes;//= encoding.GetBytes(key); //UTF8Encoding.UTF8.GetBytes("tR7nR6wZHGjYMCuV");
 
             HMACMD5 hmacmd5 = new HMACMD5(keyByte);
             HMACSHA1 hmacsha1 = new HMACSHA1(keyByte);

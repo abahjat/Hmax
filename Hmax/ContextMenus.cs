@@ -27,7 +27,7 @@ namespace Hmac
         ToolStripMenuItem Exit;
         ToolStripSeparator sep;
         Boolean isActive = false;
-        EncryptionUtil util = new EncryptionUtil(); //used to get single Key per run in a manual testing
+        EncryptionUtil util = new EncryptionUtil("tR7nR6wZHGjYMCuV"); //used to get single Key per run in a manual testing
         String password = null;
 
 
@@ -177,7 +177,7 @@ namespace Hmac
 	    private string getBackSpaces(int len)
 	    {
 	        string result = "";
-            for (int i = 0; i < len; i++)
+            for (int i = 0; i < len-1; i++)
             {
                 result += "{BS}";
             }
