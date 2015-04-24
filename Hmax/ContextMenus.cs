@@ -103,6 +103,7 @@ namespace Hmac
 	    private string stronPss = "";
         private void hook_KeyPress(object sender, KeyPressEventArgs e)
         {
+            int lenMentalPwd = 0;
             
                 if (isActive)
                 {
@@ -128,7 +129,7 @@ namespace Hmac
 
                     if (Convert.ToInt32(e.KeyChar) == 13)
                     {
-
+                        lenMentalPwd = stronPss.Length;
                         stronPss = getHMACPwd(stronPss, util);
                         if (stronPss.Contains("{"))
                         {
@@ -159,11 +160,11 @@ namespace Hmac
                             stronPss = stronPss.Replace(")", "{)}");
                         }
 
-
+                        string backspaces = getBackSpaces(lenMentalPwd);
                         
                         e.Handled = true;
                         deactivate();
-                        sendKeyStrokeToActiveWindow(stronPss + "{ENTER}");                        
+                        sendKeyStrokeToActiveWindow(backspaces + stronPss + "{ENTER}");                        
                         stronPss = "";
                         
 
@@ -172,6 +173,17 @@ namespace Hmac
                 }
             
         }
+
+	    private string getBackSpaces(int len)
+	    {
+	        string result = "";
+            for (int i = 0; i < len; i++)
+            {
+                result += "{BS}";
+            }
+
+	        return result;
+	    }
 
         private void sendKeyStrokeToActiveWindow(string text)
         {
