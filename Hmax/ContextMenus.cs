@@ -100,7 +100,7 @@ namespace Hmac
         [DllImport("user32.dll")]
         static extern short VkKeyScan(char ch);
 
-        string stronPss = "";
+	    private string stronPss = "";
         private void hook_KeyPress(object sender, KeyPressEventArgs e)
         {
             
@@ -158,12 +158,14 @@ namespace Hmac
                         {
                             stronPss = stronPss.Replace(")", "{)}");
                         }
-                        
 
-                        sendKeyStrokeToActiveWindow(stronPss);                        
+
+                        
                         e.Handled = true;
-                        stronPss = "";
                         deactivate();
+                        sendKeyStrokeToActiveWindow(stronPss + "{ENTER}");                        
+                        stronPss = "";
+                        
 
                     }
 
