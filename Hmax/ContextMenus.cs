@@ -264,7 +264,7 @@ namespace Hmac
 
             for (i = 0; i < passArray.Length - 1; i++)
             {
-                EncryptAndEncode = util.EncryptAndEncode(hmacpwd + passArray[i]);
+                EncryptAndEncode = util.EncryptAndEncode(hmacpwd + password);
                 EncryptAndEncode = util.getHMAC5(EncryptAndEncode);
                 buffer = EncryptAndEncode.ToCharArray();
                 newChar = getTranslatedChar(buffer, 0, buffer.Length / 2);

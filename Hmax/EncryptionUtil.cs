@@ -19,7 +19,6 @@ namespace Hmac
         {
             // You'll need a more secure way of storing this, I hope this isn't
             // the real key
-            //keyAndIvBytes = UTF8Encoding.UTF8.GetBytes("tR7nR6wZHGjYMCuV");
 
             rngCsp.GetBytes(keyAndIvBytes);
         }
@@ -136,47 +135,7 @@ namespace Hmac
             return Convert.ToInt32(random.NextDouble() * (maximum - minimum) + minimum);
         }
 
-        public string getHMAC(string message, int key)
-        {
-
-            key = GetRandomNumber(3000, 4000);
-
-            System.Text.ASCIIEncoding encoding = new System.Text.ASCIIEncoding();
-
-            byte[] keyByte = keyAndIvBytes;//= encoding.GetBytes(key); //UTF8Encoding.UTF8.GetBytes("tR7nR6wZHGjYMCuV");
-
-            HMACMD5 hmacmd5 = new HMACMD5(keyByte);
-            HMACSHA1 hmacsha1 = new HMACSHA1(keyByte);
-            HMACSHA256 hmacsha256 = new HMACSHA256(keyByte);
-            HMACSHA384 hmacsha384 = new HMACSHA384(keyByte);
-            HMACSHA512 hmacsha512 = new HMACSHA512(keyByte);
-
-            byte[] messageBytes = encoding.GetBytes(message);
-
-            byte[] hashmessage = hmacmd5.ComputeHash(messageBytes);
-
-            string hmac1 = ByteToString(hashmessage);
-
-            hashmessage = hmacsha1.ComputeHash(messageBytes);
-
-            string hmac2 = ByteToString(hashmessage);
-
-            hashmessage = hmacsha256.ComputeHash(messageBytes);
-
-            string hmac3 = ByteToString(hashmessage);
-
-            hashmessage = hmacsha384.ComputeHash(messageBytes);
-
-            string hmac4 = ByteToString(hashmessage);
-
-            hashmessage = hmacsha512.ComputeHash(messageBytes);
-
-            string hmac5 = ByteToString(hashmessage);
-
-            return hmac5;
-
-        }
-
+        
         public string getHMAC5(string message)
         {
 
