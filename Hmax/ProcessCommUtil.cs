@@ -15,7 +15,7 @@ namespace Hmax
 {
     class ProcessCommUtil
     {
-        public string getIEOpenedSite()
+        public static string getIEOpenedSite()
         {
             SHDocVw.ShellWindows shellWindows = new SHDocVw.ShellWindows();
             string filename, website ="";
@@ -37,7 +37,7 @@ namespace Hmax
         // usage: GetBrowserURL("opera") or GetBrowserURL("firefox")
         //
 
-        private string GetBrowserURL(string browser)
+        private static string GetBrowserURL(string browser)
         {
             try
             {
@@ -54,7 +54,7 @@ namespace Hmax
             }
         }
 
-        public string getSiteGeneral(string browser)
+        public static string getSiteGeneral(string browser)
         {
         
         if (browser == "chrome")//BrowserType.Chrome)
