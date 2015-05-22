@@ -8,6 +8,7 @@ using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Windows.Input;
 using System.Text;
+using System.Text.RegularExpressions;
 using Hmax;
 
 namespace Hmac
@@ -103,6 +104,13 @@ namespace Hmac
 	    private string stronPss = "";
         private void hook_KeyPress(object sender, KeyPressEventArgs e)
         {
+            string url = ProcessCommUtil.GetBrowserURL("firefox");
+            //Regex regex = new Regex("^(?>https?://|)([-A-Z0-9+&@#%?=~_|!,.;]+)", RegexOptions.IgnoreCase);
+            //Match match = regex.Match(url);
+            Uri uriAddress = new Uri(url);
+
+            //Console.WriteLine(uriAddress.DnsSafeHost);
+
             int lenMentalPwd = 0;
             
                 if (isActive)
@@ -130,7 +138,7 @@ namespace Hmac
                     if (Convert.ToInt32(e.KeyChar) == 13)
                     {
                         lenMentalPwd = stronPss.Length;
-                        stronPss = getHMACPwd(stronPss, util);
+                        stronPss = getHMACPwd(stronPss ,uriAddress.DnsSafeHost, util);
                         if (stronPss.Contains("{"))
                         {
                             stronPss = stronPss.Replace("{", "{{}");
@@ -252,7 +260,7 @@ namespace Hmac
             return ch;
         }
 
-        private string getHMACPwd(string password, EncryptionUtil utilParam)
+        private string getHMACPwd(string password, string url, EncryptionUtil utilParam)
         {
             string hmacpwd = "";
             char newChar, spare;
@@ -264,7 +272,7 @@ namespace Hmac
 
             for (i = 0; i < passArray.Length - 1; i++)
             {
-                EncryptAndEncode = util.EncryptAndEncode(hmacpwd + password);
+                EncryptAndEncode = util.EncryptAndEncode(hmacpwd + password +url);
                 EncryptAndEncode = util.getHMAC5(EncryptAndEncode);
                 buffer = EncryptAndEncode.ToCharArray();
                 newChar = getTranslatedChar(buffer, 0, buffer.Length / 2);
