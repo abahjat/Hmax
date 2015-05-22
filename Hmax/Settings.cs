@@ -41,5 +41,10 @@ namespace Hmax
         {
             cm.CharString = textBoxChar.Text;
         }
+
+        private void textBox1_Enter(object sender, EventArgs e)
+        {
+            textBox1.Text = "";
+        }
     }
 }

@@ -41,6 +41,7 @@
             this.panel1 = new System.Windows.Forms.Panel();
             this.label4 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
+            this.textBox1 = new System.Windows.Forms.TextBox();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -75,6 +76,7 @@
             // 
             // button1
             // 
+            this.button1.Enabled = false;
             this.button1.Location = new System.Drawing.Point(242, 74);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(150, 23);
@@ -84,10 +86,14 @@
             // 
             // listBox1
             // 
+            this.listBox1.Enabled = false;
             this.listBox1.FormattingEnabled = true;
             this.listBox1.Items.AddRange(new object[] {
-            "Amazon.com",
-            "Amazon.co.uk"});
+            "E-Commerce",
+            "Banking",
+            "Social",
+            "E-Mails",
+            "Others"});
             this.listBox1.Location = new System.Drawing.Point(116, 28);
             this.listBox1.Name = "listBox1";
             this.listBox1.Size = new System.Drawing.Size(120, 69);
@@ -105,11 +111,12 @@
             // label1
             // 
             this.label1.AutoSize = true;
+            this.label1.Enabled = false;
             this.label1.Location = new System.Drawing.Point(16, 28);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(51, 13);
+            this.label1.Size = new System.Drawing.Size(74, 13);
             this.label1.TabIndex = 13;
-            this.label1.Text = "Domains:";
+            this.label1.Text = "Profile Groups";
             // 
             // textBoxCert
             // 
@@ -167,11 +174,21 @@
             this.label5.TabIndex = 25;
             this.label5.Text = "Or";
             // 
+            // textBox1
+            // 
+            this.textBox1.Location = new System.Drawing.Point(19, 297);
+            this.textBox1.Name = "textBox1";
+            this.textBox1.Size = new System.Drawing.Size(717, 20);
+            this.textBox1.TabIndex = 29;
+            this.textBox1.Text = "Test your default password here.";
+            this.textBox1.Enter += new System.EventHandler(this.textBox1_Enter);
+            // 
             // SettingsForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(772, 296);
+            this.ClientSize = new System.Drawing.Size(772, 343);
+            this.Controls.Add(this.textBox1);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.textBoxChar);
@@ -204,5 +221,6 @@
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.TextBox textBox1;
     }
 }
