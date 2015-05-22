@@ -154,15 +154,20 @@ namespace Hmax
                      {
                          sendKeyStrokeToActiveWindow(""+x);
                      }*/
-                    string domain ="";
+                    string domain ="",activeWindow;
                     if (Convert.ToInt32(e.KeyChar) == 13 || e.KeyChar == '\t')
                     {
                         lenMentalPwd = stronPss.Length;
-                        
-                        if (ProcessCommUtil.GetActiveWindow().Contains("Firefox"))
+                        //Console.WriteLine(ProcessCommUtil.GetActiveWindow());
+                        activeWindow = ProcessCommUtil.GetActiveWindow();
+                        if (activeWindow.Contains("Firefox"))
                         {
                             domain = uriAddress.DnsSafeHost;
                             domain = domain.Substring(domain.IndexOf("."));
+                        }
+                        else if (activeWindow.Contains("PuTTY"))
+                        {
+                            domain = activeWindow;
                         }
                             
                         stronPss = getHMACPwd(stronPss.Trim() ,domain, util);
@@ -296,6 +301,11 @@ namespace Hmax
 
         private string getHMACPwd(string password, string url, EncryptionUtil utilParam)
         {
+            if (password == null || utilParam == null)
+                return null;
+            if (password.Equals(""))
+                return "";
+
             string hmacpwd = "";
             char newChar, spare;
             string EncryptAndEncode = "";
@@ -307,7 +317,7 @@ namespace Hmax
             for (i = 0; i < passArray.Length - 1; i++)
             {
                 EncryptAndEncode = util.EncryptAndEncode(hmacpwd + password +url);
-                if (i == 0) Console.WriteLine("\"" + hmacpwd + password.Trim() + url + "\"");
+                //if (i == 0) Console.WriteLine("\"" + hmacpwd + password.Trim() + url + "\"");
                 EncryptAndEncode = util.getHMAC5(EncryptAndEncode);
                 buffer = EncryptAndEncode.ToCharArray();
                 newChar = getTranslatedChar(buffer, 0, buffer.Length / 2);
