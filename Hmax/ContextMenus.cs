@@ -15,7 +15,7 @@ namespace Hmax
 	/// <summary>
 	/// 
 	/// </summary>
-	class ContextMenus
+	public class ContextMenus
 	{
 		/// <summary>
 		/// Is the About box displayed?
@@ -27,12 +27,29 @@ namespace Hmax
         ToolStripMenuItem Exit;
         ToolStripSeparator sep;
         Boolean isActive = false;
-        EncryptionUtil util = new EncryptionUtil("CN=Test Cert2"); 
+	    private string _certSubject = "CN=Test Cert2";
+	    private EncryptionUtil util;
         String password = null;
 
+	    public string CertSubject
+	    {
+	        get { return _certSubject; }
+	        set { _certSubject = value; }
+	    }
 
+	    public string CharString
+	    {
+	        get { return charString; }
+	        set { charString = value; }
+	    }
 
-		/// <summary>
+	    public void ResetCert(string subject)
+	    {
+	        util = subject == null ? new EncryptionUtil() : new EncryptionUtil(subject);
+	        CertSubject = subject;
+	    }
+
+	    /// <summary>
 		/// Creates this instance.
 		/// </summary>
 		/// <returns>ContextMenuStrip</returns>
@@ -41,7 +58,7 @@ namespace Hmax
 			// Add the default menu options.
 			
 			
-
+            util = new EncryptionUtil(_certSubject); 
 			// Windows Explorer.
             Activate = new ToolStripMenuItem();
             Activate.Text = "Activate";
@@ -316,10 +333,12 @@ namespace Hmax
             return hmacpwd;
         }
 
+	    private string charString =
+	        "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789~!@#$%^&*()_-+=<>;:[]?.,|/`";
         private char getTranslatedChar(char[] buffer, int start, int end)
         {
             long number = 0;
-            char[] chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789~!@#$%^&*()_-+=<>;:[]?.,|/`".ToCharArray();
+            char[] chars = charString.ToCharArray();
 
             for (int i = start; i < end; i++)
                 if (long.MaxValue - number > buffer[i])
@@ -389,7 +408,7 @@ namespace Hmax
 
         void settings()
         {
-            SettingsForm set = new SettingsForm();
+            SettingsForm set = new SettingsForm(this);
             set.ShowDialog();
             set.Dispose();
         }
