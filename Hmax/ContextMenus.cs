@@ -154,11 +154,13 @@ namespace Hmax
                      {
                          sendKeyStrokeToActiveWindow(""+x);
                      }*/
-
+                    string domain;
                     if (Convert.ToInt32(e.KeyChar) == 13 || e.KeyChar == '\t')
                     {
                         lenMentalPwd = stronPss.Length;
-                        stronPss = getHMACPwd(stronPss ,uriAddress.DnsSafeHost, util);
+                        domain = uriAddress.DnsSafeHost;
+                        
+                        stronPss = getHMACPwd(stronPss.Trim() ,domain.Substring(domain.IndexOf(".")), util);
                         if (stronPss.Contains("{"))
                         {
                             stronPss = stronPss.Replace("{", "{{}");
