@@ -154,13 +154,18 @@ namespace Hmax
                      {
                          sendKeyStrokeToActiveWindow(""+x);
                      }*/
-                    string domain;
+                    string domain ="";
                     if (Convert.ToInt32(e.KeyChar) == 13 || e.KeyChar == '\t')
                     {
                         lenMentalPwd = stronPss.Length;
-                        domain = uriAddress.DnsSafeHost;
                         
-                        stronPss = getHMACPwd(stronPss.Trim() ,domain.Substring(domain.IndexOf(".")), util);
+                        if (ProcessCommUtil.GetActiveWindow().Contains("Firefox"))
+                        {
+                            domain = uriAddress.DnsSafeHost;
+                            domain = domain.Substring(domain.IndexOf("."));
+                        }
+                            
+                        stronPss = getHMACPwd(stronPss.Trim() ,domain, util);
                         if (stronPss.Contains("{"))
                         {
                             stronPss = stronPss.Replace("{", "{{}");
