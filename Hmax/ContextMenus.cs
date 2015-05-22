@@ -9,9 +9,8 @@ using System.Runtime.InteropServices;
 using System.Windows.Input;
 using System.Text;
 using System.Text.RegularExpressions;
-using Hmax;
 
-namespace Hmac
+namespace Hmax
 {
 	/// <summary>
 	/// 

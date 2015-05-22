@@ -9,7 +9,7 @@ using System.Net.Sockets;
 using System.Numerics;
 using System.Security.Cryptography.X509Certificates;
 
-namespace Hmac
+namespace Hmax
 {
     public class EncryptionUtil
     {
