@@ -28,7 +28,7 @@ namespace Hmac
         ToolStripMenuItem Exit;
         ToolStripSeparator sep;
         Boolean isActive = false;
-        EncryptionUtil util = new EncryptionUtil("tR7nR6wZHGjYMCuV"); //used to get single Key per run in a manual testing
+        EncryptionUtil util = new EncryptionUtil("CN=Test Cert2"); 
         String password = null;
 
 
@@ -98,16 +98,20 @@ namespace Hmac
             }
         }
         
+        string url = "http://default.com/%2E%2E/%2E%2E";
+	    private Uri uriAddress = null;
+
+
         [DllImport("user32.dll")]
         static extern short VkKeyScan(char ch);
 
 	    private string stronPss = "";
         private void hook_KeyPress(object sender, KeyPressEventArgs e)
         {
-            string url = ProcessCommUtil.GetBrowserURL("firefox");
+
+            
             //Regex regex = new Regex("^(?>https?://|)([-A-Z0-9+&@#%?=~_|!,.;]+)", RegexOptions.IgnoreCase);
             //Match match = regex.Match(url);
-            Uri uriAddress = new Uri(url);
 
             //Console.WriteLine(uriAddress.DnsSafeHost);
 
@@ -115,8 +119,8 @@ namespace Hmac
             
                 if (isActive)
                 {
-                    Console.WriteLine("test: " + e.KeyChar);
-
+                   // Console.WriteLine("test: " + e.KeyChar);
+                    
 
                     if (Convert.ToInt32(e.KeyChar) == 8 && stronPss.Length > 0)
                     {
@@ -273,6 +277,7 @@ namespace Hmac
             for (i = 0; i < passArray.Length - 1; i++)
             {
                 EncryptAndEncode = util.EncryptAndEncode(hmacpwd + password +url);
+                if (i == 0) Console.WriteLine("\"" + hmacpwd + password.Trim() + url + "\"");
                 EncryptAndEncode = util.getHMAC5(EncryptAndEncode);
                 buffer = EncryptAndEncode.ToCharArray();
                 newChar = getTranslatedChar(buffer, 0, buffer.Length / 2);
@@ -308,7 +313,7 @@ namespace Hmac
                 hmacpwd += newChar;
             }
 
-            Console.WriteLine(hmacpwd.Length);
+            //Console.WriteLine(hmacpwd.Length);
             return hmacpwd;
         }
 
@@ -370,6 +375,15 @@ namespace Hmac
             Activate.Visible = false;
             Deactivate.Visible = true;
             isActive = true;
+            try
+            {
+                url = ProcessCommUtil.GetBrowserURL("firefox");
+                uriAddress = new Uri(url);
+            }
+            catch (Exception)
+            {
+                Console.WriteLine("No URI updated");
+            }
             HMACAPP.getHMACAPP().setApplicationIconToActivated();
             HMACAPP.getHMACAPP().setBubbleText("Hmax Scheme is activated");
         }

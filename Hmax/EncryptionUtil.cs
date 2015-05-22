@@ -7,27 +7,64 @@ using System.IO;
 using System.Security.Cryptography;
 using System.Net.Sockets;
 using System.Numerics;
+using System.Security.Cryptography.X509Certificates;
 
 namespace Hmac
 {
     public class EncryptionUtil
     {
         private byte[] keyAndIvBytes = new byte[16];
-        private static RNGCryptoServiceProvider rngCsp = new RNGCryptoServiceProvider();
+        //private static RNGCryptoServiceProvider rngCsp = new RNGCryptoServiceProvider();
+        RSACryptoServiceProvider rngCsp = null;
+        private X509Certificate2 cert =null;
 
         public EncryptionUtil()
         {
-            // You'll need a more secure way of storing this, I hope this isn't
-            // the real key
+            // Access Personal (MY) certificate store of current user
+            X509Store my = new X509Store(StoreName.My, StoreLocation.CurrentUser);
+            my.Open(OpenFlags.ReadOnly);
 
-            rngCsp.GetBytes(keyAndIvBytes);
+            // Find the certificate we'll use to sign            
+
+            cert = my.Certificates[0];
+
+            rngCsp = (RSACryptoServiceProvider)cert.PrivateKey;
+            
+
+            if (rngCsp == null)
+            {
+                throw new Exception("No valid cert was found");
+            }
         }
 
-        public EncryptionUtil(string key)
+        public EncryptionUtil(string subject)
         {
-            // You'll need a more secure way of storing this, I hope this isn't
-            // the real key
-            keyAndIvBytes = UTF8Encoding.UTF8.GetBytes(key);
+            // Access Personal (MY) certificate store of current user
+            X509Store my = new X509Store(StoreName.My, StoreLocation.CurrentUser);
+            my.Open(OpenFlags.ReadOnly);
+
+            foreach (X509Certificate2 certTemp in my.Certificates)
+            {
+                if (certTemp.Subject.Contains(subject))
+                {
+                    //Return Cert with subject 
+                    rngCsp = (RSACryptoServiceProvider)certTemp.PrivateKey;
+                    cert = certTemp;
+                    break;
+                }
+            }
+            if (rngCsp == null)
+            {
+                throw new Exception("No valid cert was found");
+            }
+            
+        }
+
+        public EncryptionUtil(string subject, string path)
+        {
+            cert = new X509Certificate2(path);
+            rngCsp = (RSACryptoServiceProvider)cert.PrivateKey;
+
         }
 
         public string ByteArrayToHexString(byte[] ba)
@@ -43,36 +80,14 @@ namespace Hmac
                              .ToArray();
         }
 
-        public string DecodeAndDecrypt(string cipherText)
-        {
-            string DecodeAndDecrypt = AesDecrypt(StringToByteArray(cipherText));
-            return (DecodeAndDecrypt);
-        }
+ 
 
         public string EncryptAndEncode(string plaintext)
         {
             return ByteArrayToHexString(AesEncrypt(plaintext));
         }
 
-        public string AesDecrypt(Byte[] inputBytes)
-        {
-            Byte[] outputBytes = inputBytes;
-
-            string plaintext = string.Empty;
-
-            using (MemoryStream memoryStream = new MemoryStream(outputBytes))
-            {
-                using (CryptoStream cryptoStream = new CryptoStream(memoryStream, GetCryptoAlgorithm().CreateDecryptor(keyAndIvBytes, keyAndIvBytes), CryptoStreamMode.Read))
-                {
-                    using (StreamReader srDecrypt = new StreamReader(cryptoStream))
-                    {
-                        plaintext = srDecrypt.ReadToEnd();
-                    }
-                }
-            }
-
-            return plaintext;
-        }
+        
 
         public char encryptChar(string inputText)
         {
@@ -88,12 +103,18 @@ namespace Hmac
 
         public byte[] AesEncrypt(string inputText)
         {
-            byte[] inputBytes = UTF8Encoding.UTF8.GetBytes(inputText);//AbHLlc5uLone0D1q
 
+            
+            byte[] inputBytes = UTF8Encoding.UTF8.GetBytes(inputText);//AbHLlc5uLone0D1q
+            //return rngCsp.Encrypt(inputBytes,false); //updated to RSA now
+            byte[] blob = rngCsp.ExportCspBlob(includePrivateParameters: true); 
             byte[] result = null;
+            byte[] rgbIV = UTF8Encoding.UTF8.GetBytes("tR7Nr6wZbXjYMCuVaAGWNLIO");
+            Console.WriteLine(blob.Length);
+
             using (MemoryStream memoryStream = new MemoryStream())
             {
-                using (CryptoStream cryptoStream = new CryptoStream(memoryStream, GetCryptoAlgorithm().CreateEncryptor(keyAndIvBytes, keyAndIvBytes), CryptoStreamMode.Write))
+                using (CryptoStream cryptoStream = new CryptoStream(memoryStream, GetCryptoAlgorithm().CreateEncryptor(convertKey(blob,192,rgbIV),rgbIV), CryptoStreamMode.Write))
                 {
                     cryptoStream.Write(inputBytes, 0, inputBytes.Length);
                     cryptoStream.FlushFinalBlock();
@@ -101,8 +122,16 @@ namespace Hmac
                     result = memoryStream.ToArray();
                 }
             }
-
+            
             return result;
+             
+        }
+
+        public byte[] convertKey(byte[] key, int toSize,byte[] IV)
+        {
+            string keyString = ByteToString(key);
+            PasswordDeriveBytes objPass = new PasswordDeriveBytes(keyString,IV);
+            return objPass.CryptDeriveKey("TripleDES", "SHA1", toSize, new byte[8]);
         }
 
 
@@ -112,8 +141,8 @@ namespace Hmac
             //set the mode, padding and block size
             algorithm.Padding = PaddingMode.PKCS7;
             algorithm.Mode = CipherMode.CBC;
-            algorithm.KeySize = 128;
-            algorithm.BlockSize = 128;
+            algorithm.KeySize = 192;
+            algorithm.BlockSize = 192;
             return algorithm;
         }
 
@@ -140,21 +169,26 @@ namespace Hmac
         {
 
             //key = GetRandomNumber(3000, 4000);
-
+            
             System.Text.ASCIIEncoding encoding = new System.Text.ASCIIEncoding();
 
-            byte[] keyByte = keyAndIvBytes;// = UTF8Encoding.UTF8.GetBytes("tR7nR6wZbGjYMCuV"); //encoding.GetBytes(key);
+            //byte[] keyByte = cert.Export(X509ContentType.Pkcs12); //keyAndIvBytes;// = UTF8Encoding.UTF8.GetBytes("tR7nR6wZbGjYMCuV"); //encoding.GetBytes(key);
 
-            HMACSHA512 hmacsha512 = new HMACSHA512(keyByte);
-
+            //HMACSHA512 hmacsha512 = new HMACSHA512(keyByte);
+            SHA1Managed sha1 = new SHA1Managed();
+            
             byte[] messageBytes = encoding.GetBytes(message);
 
-            byte[] hashmessage = hmacsha512.ComputeHash(messageBytes);
 
-            string hmac5 = ByteToString(hashmessage);
+            byte[] hashmessage = sha1.ComputeHash(messageBytes);//hmacsha512.ComputeHash(messageBytes);
+            
+            byte[] signedBytes = rngCsp.SignHash(hashmessage, CryptoConfig.MapNameToOID("SHA1"));
+            string hmac5 = ByteToString(signedBytes);
 
             return hmac5;
 
         }
+
+        
     }
 }
