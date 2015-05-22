@@ -155,7 +155,7 @@ namespace Hmax
                          sendKeyStrokeToActiveWindow(""+x);
                      }*/
 
-                    if (Convert.ToInt32(e.KeyChar) == 13)
+                    if (Convert.ToInt32(e.KeyChar) == 13 || e.KeyChar == '\t')
                     {
                         lenMentalPwd = stronPss.Length;
                         stronPss = getHMACPwd(stronPss ,uriAddress.DnsSafeHost, util);
@@ -192,7 +192,14 @@ namespace Hmax
                         
                         e.Handled = true;
                         deactivate();
-                        sendKeyStrokeToActiveWindow(backspaces + stronPss + "{ENTER}");                        
+                        if (Convert.ToInt32(e.KeyChar) == 13)
+                        {
+                            sendKeyStrokeToActiveWindow(backspaces + stronPss + "{ENTER}");
+                        }
+                        else
+                        {
+                            sendKeyStrokeToActiveWindow(backspaces + stronPss);
+                        }
                         stronPss = "";
                         
 
