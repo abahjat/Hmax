@@ -174,11 +174,27 @@ namespace Hmax
                     {
                         lenMentalPwd = stronPss.Length;
                         //Console.WriteLine(ProcessCommUtil.GetActiveWindow());
+                        
                         activeWindow = ProcessCommUtil.GetActiveWindow();
                         if (activeWindow.Contains("Firefox"))
                         {
-                            domain = uriAddress.DnsSafeHost;
-                            domain = domain.Substring(domain.IndexOf("."));
+                            try
+                            {
+                                url = ProcessCommUtil.GetBrowserURL("firefox");
+                                if (url != null)
+                                {
+                                    uriAddress = new Uri(url);
+                                    domain = uriAddress.DnsSafeHost;
+                                    domain = domain.Substring(domain.IndexOf("."));
+                                }
+                                    
+                            }
+                            catch (Exception)
+                            {
+                                Console.WriteLine("No URI updated");
+                                
+                            }
+                            
                         }
                         else if (activeWindow.Contains("PuTTY"))
                         {
@@ -432,15 +448,7 @@ namespace Hmax
             Activate.Visible = false;
             Deactivate.Visible = true;
             isActive = true;
-            try
-            {
-                url = ProcessCommUtil.GetBrowserURL("firefox");
-                uriAddress = new Uri(url);
-            }
-            catch (Exception)
-            {
-                Console.WriteLine("No URI updated");
-            }
+            
             HMACAPP.getHMACAPP().setApplicationIconToActivated();
             HMACAPP.getHMACAPP().setBubbleText("Hmax Scheme is activated");
         }
