@@ -24,13 +24,21 @@ namespace Hmax
             // Access Personal (MY) certificate store of current user
             X509Store my = new X509Store(StoreName.My, StoreLocation.CurrentUser);
             my.Open(OpenFlags.ReadOnly);
+            string secret = "asdwejDLKFJAasdfasfasfertwtlaksdjf43fsflasdsadsfa";
+            byte[] secretData = Encoding.UTF8.GetBytes(secret);
 
             // Find the certificate we'll use to sign            
             if (my.Certificates.Count > 0)
             {
                 cert = my.Certificates[0];
-
-                rngCsp = (RSACryptoServiceProvider)cert.PrivateKey;
+                try
+                {
+                    rngCsp = (RSACryptoServiceProvider)cert.PrivateKey;
+                }
+                catch (Exception)
+                {
+                    rngCsp = new RSACryptoServiceProvider(1024);
+                }
 
             }else
             {
