@@ -31,19 +31,18 @@ namespace Hmax
             if (my.Certificates.Count > 0)
             {
                 cert = my.Certificates[0];
-                try
-                {
+                if (cert.PrivateKey != null)
                     rngCsp = (RSACryptoServiceProvider)cert.PrivateKey;
-                }
-                catch (Exception)
-                {
+                else
                     rngCsp = new RSACryptoServiceProvider(1024);
-                }
 
             }else
             {
                 cert = new X509Certificate2("dummyCert1.cert");
-                rngCsp = (RSACryptoServiceProvider)cert.PrivateKey;
+                if (cert.PrivateKey != null)
+                    rngCsp = (RSACryptoServiceProvider)cert.PrivateKey;
+                else
+                    rngCsp = new RSACryptoServiceProvider(1024);
                 //cert = this.
             }
         }
