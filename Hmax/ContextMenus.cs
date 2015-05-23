@@ -101,10 +101,19 @@ namespace Hmax
             hook.Start(false,true);
             hook.KeyPress += hook_KeyPress;
             hook.KeyUp += f4_KeyUp;
+            hook.KeyDown += f4_KeyDown;
 
 			return menu;
 		}
 
+        private void f4_KeyDown(object sender, KeyEventArgs e){
+            if (e.KeyData == Keys.F4)
+            {
+                e.SuppressKeyPress = true;
+                e.Handled = true;
+            }
+                
+        }
         private void f4_KeyUp(object sender, KeyEventArgs e)
         {
             if (e.KeyData == Keys.F4)

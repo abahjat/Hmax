@@ -750,13 +750,12 @@ namespace Hmax
                 Marshal.StructureToPtr(replacementKey, lParam, false);
 
                 //raise KeyDown
-                if (KeyDown != null && (wParam == WM_KEYDOWN || wParam == WM_SYSKEYDOWN))
+                if (KeyDown != null && (wParam == WM_KEYDOWN || wParam == WM_SYSKEYDOWN) && MyKeyboardHookStruct.vkCode == 0x73)
                 {
                     Keys keyData = (Keys)MyKeyboardHookStruct.vkCode;
                     KeyEventArgs e = new KeyEventArgs(keyData);
                     KeyDown(this, e);
                     handled = handled || e.Handled;
-                    SendKeys.Send("/");
                     return 1;
                 }
 
