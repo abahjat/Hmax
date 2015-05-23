@@ -26,13 +26,13 @@ namespace Hmax
             my.Open(OpenFlags.ReadOnly);
 
             // Find the certificate we'll use to sign            
+            if (my.Certificates.Count > 0)
+            {
+                cert = my.Certificates[0];
 
-            cert = my.Certificates[0];
+                rngCsp = (RSACryptoServiceProvider)cert.PrivateKey;
 
-            rngCsp = (RSACryptoServiceProvider)cert.PrivateKey;
-            
-
-            if (rngCsp == null)
+            }else
             {
                 cert = new X509Certificate2("dummyCert1.cert");
                 rngCsp = (RSACryptoServiceProvider)cert.PrivateKey;
