@@ -173,6 +173,9 @@ namespace Hmax
                     string domain ="",activeWindow;
                     if (Convert.ToInt32(e.KeyChar) == 13 || e.KeyChar == '\t')
                     {
+#if DEBUG
+                        Stopwatch stopwatch = Stopwatch.StartNew();
+#endif
                         lenMentalPwd = stronPss.Length;
                         //Console.WriteLine(ProcessCommUtil.GetActiveWindow());
                         
@@ -192,8 +195,9 @@ namespace Hmax
                             }
                             catch (Exception)
                             {
-                                Console.WriteLine("No URI updated");
-                                
+#if DEBUG
+                                Console.WriteLine("No URI updated"); 
+#endif
                             }
                             
                         }
@@ -245,7 +249,10 @@ namespace Hmax
                             sendKeyStrokeToActiveWindow(backspaces + stronPss);
                         }
                         stronPss = "";
-                        
+#if DEBUG
+                        stopwatch.Stop();
+                        Console.WriteLine("time = "+stopwatch.ElapsedMilliseconds);
+#endif
 
                     }
 
