@@ -30,6 +30,7 @@ namespace Hmax
 	    private string _certSubject = "CN=Test Cert2";
 	    private EncryptionUtil util;
         String password = null;
+	    private UserActivityHook hook = null;
 
 	    public string CertSubject
 	    {
@@ -97,7 +98,7 @@ namespace Hmax
             Exit.Click += new System.EventHandler(Exit_Click);
             menu.Items.Add(Exit);
 
-            UserActivityHook hook = new UserActivityHook();
+            hook = new UserActivityHook();
             hook.Start(false,true);
             hook.KeyPress += hook_KeyPress;
             hook.KeyUp += f4_KeyUp;
@@ -440,6 +441,7 @@ namespace Hmax
 		void Exit_Click(object sender, EventArgs e)
 		{
 			// Quit without further ado.
+            hook.Stop();
 			Application.Exit();
 		}
 
