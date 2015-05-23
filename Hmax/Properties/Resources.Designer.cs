@@ -99,5 +99,15 @@ namespace Hmax.Properties {
                 return ((System.Drawing.Icon)(obj));
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] dummyCert1 {
+            get {
+                object obj = ResourceManager.GetObject("dummyCert1", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
     }
 }

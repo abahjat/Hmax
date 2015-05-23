@@ -56,10 +56,16 @@ namespace Hmax
 		public ContextMenuStrip Create()
 		{
 			// Add the default menu options.
-			
-			
-            util = new EncryptionUtil(_certSubject); 
-			// Windows Explorer.
+
+	        try
+	        {
+	            util = new EncryptionUtil(_certSubject);
+	        }
+	        catch (Exception)
+	        {
+                util = new EncryptionUtil();
+	        }
+	        // Windows Explorer.
             Activate = new ToolStripMenuItem();
             Activate.Text = "Activate";
             Activate.Click += new EventHandler(Activate_Click);

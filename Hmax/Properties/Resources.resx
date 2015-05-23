@@ -130,4 +130,7 @@
   <data name="bullet_red1" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\icons\bullet_red.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="dummyCert1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\dummyCert1.cert;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
 </root>

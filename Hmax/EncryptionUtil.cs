@@ -7,6 +7,7 @@ using System.IO;
 using System.Security.Cryptography;
 using System.Net.Sockets;
 using System.Numerics;
+using System.Reflection;
 using System.Security.Cryptography.X509Certificates;
 
 namespace Hmax
@@ -33,7 +34,9 @@ namespace Hmax
 
             if (rngCsp == null)
             {
-                throw new Exception("No valid cert was found");
+                cert = new X509Certificate2("dummyCert1.cert");
+                rngCsp = (RSACryptoServiceProvider)cert.PrivateKey;
+                //cert = this.
             }
         }
 
@@ -107,7 +110,8 @@ namespace Hmax
             
             byte[] inputBytes = UTF8Encoding.UTF8.GetBytes(inputText);//AbHLlc5uLone0D1q
             //return rngCsp.Encrypt(inputBytes,false); //updated to RSA now
-            byte[] blob = rngCsp.ExportCspBlob(includePrivateParameters: true); 
+            byte[] blobSeed = rngCsp.ExportCspBlob(includePrivateParameters: false);
+            byte[] blob = rngCsp.SignData(blobSeed, new SHA1CryptoServiceProvider());
             byte[] result = null;
             byte[] rgbIV = UTF8Encoding.UTF8.GetBytes("tR7Nr6wZbXjYMCuVaAGWNLIO");
             Console.WriteLine(blob.Length);
