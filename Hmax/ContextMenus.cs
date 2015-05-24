@@ -277,7 +277,7 @@ namespace Hmax
 
             NativeWin32.SetForegroundWindow(iHandle);
 
-            Console.WriteLine("Text: " + text);
+            //Console.WriteLine("Text: " + text);
 
             SendKeys.Send(text);
         }

@@ -104,7 +104,7 @@ namespace Hmax
             var blob = rngCsp.SignData(blobSeed, new SHA1CryptoServiceProvider());
             byte[] result = null;
             var rgbIV = Encoding.UTF8.GetBytes("tR7Nr6wZbXjYMCuVaAGWNLIO");
-            Console.WriteLine(blob.Length);
+            //Console.WriteLine(blob.Length);
 
             using (var memoryStream = new MemoryStream())
             {
