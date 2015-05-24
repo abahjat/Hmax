@@ -44,9 +44,9 @@
             this.label4 = new System.Windows.Forms.Label();
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.panel2 = new System.Windows.Forms.Panel();
-            this.panel3 = new System.Windows.Forms.Panel();
-            this.label5 = new System.Windows.Forms.Label();
             this.statusLabel = new System.Windows.Forms.Label();
+            this.label5 = new System.Windows.Forms.Label();
+            this.panel3 = new System.Windows.Forms.Panel();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
             this.panel3.SuspendLayout();
@@ -75,9 +75,9 @@
             // 
             this.button2.Location = new System.Drawing.Point(13, 48);
             this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(75, 23);
+            this.button2.Size = new System.Drawing.Size(113, 23);
             this.button2.TabIndex = 17;
-            this.button2.Text = "Replace";
+            this.button2.Text = "Replace Cert.";
             this.button2.UseVisualStyleBackColor = true;
             this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
@@ -127,7 +127,7 @@
             // 
             // textBoxCert
             // 
-            this.textBoxCert.Location = new System.Drawing.Point(94, 16);
+            this.textBoxCert.Location = new System.Drawing.Point(83, 13);
             this.textBoxCert.Name = "textBoxCert";
             this.textBoxCert.Size = new System.Drawing.Size(161, 20);
             this.textBoxCert.TabIndex = 23;
@@ -212,15 +212,14 @@
             this.panel2.Size = new System.Drawing.Size(620, 136);
             this.panel2.TabIndex = 30;
             // 
-            // panel3
+            // statusLabel
             // 
-            this.panel3.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.panel3.Controls.Add(this.button5);
-            this.panel3.Controls.Add(this.button4);
-            this.panel3.Location = new System.Drawing.Point(386, 9);
-            this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(200, 100);
-            this.panel3.TabIndex = 28;
+            this.statusLabel.AutoSize = true;
+            this.statusLabel.Location = new System.Drawing.Point(71, 108);
+            this.statusLabel.Name = "statusLabel";
+            this.statusLabel.Size = new System.Drawing.Size(35, 13);
+            this.statusLabel.TabIndex = 30;
+            this.statusLabel.Text = "label7";
             // 
             // label5
             // 
@@ -231,14 +230,15 @@
             this.label5.TabIndex = 29;
             this.label5.Text = "Status:";
             // 
-            // statusLabel
+            // panel3
             // 
-            this.statusLabel.AutoSize = true;
-            this.statusLabel.Location = new System.Drawing.Point(71, 108);
-            this.statusLabel.Name = "statusLabel";
-            this.statusLabel.Size = new System.Drawing.Size(35, 13);
-            this.statusLabel.TabIndex = 30;
-            this.statusLabel.Text = "label7";
+            this.panel3.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.panel3.Controls.Add(this.button5);
+            this.panel3.Controls.Add(this.button4);
+            this.panel3.Location = new System.Drawing.Point(386, 9);
+            this.panel3.Name = "panel3";
+            this.panel3.Size = new System.Drawing.Size(200, 100);
+            this.panel3.TabIndex = 28;
             // 
             // SettingsForm
             // 
@@ -255,7 +255,7 @@
             this.Controls.Add(this.listBox1);
             this.Controls.Add(this.label1);
             this.Name = "SettingsForm";
-            this.Text = "HMax Settings";
+            this.Text = "Hmax Settings";
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
             this.panel2.ResumeLayout(false);
