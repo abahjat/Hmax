@@ -16,15 +16,16 @@ namespace Hmax
             if (certInUse)
             {
                 textBoxCert.Text = cm.CertSubject;
+                statusLabel.Text = "Certificate in use";
                 
             }
             else if (cm.Path.Length > 0)
             {
-                textBoxCert.Text = "File in Use: " + cm.Path;
+                statusLabel.Text = "File in Use: " + cm.Path;
             }
             else
             {
-                textBoxCert.Text = "Smart Card in Use";
+                statusLabel.Text = "Certificate in use";
             }
 
             textBoxChar.Text = cm.CharString;
@@ -35,6 +36,7 @@ namespace Hmax
         {
             cm.ResetCert(textBoxCert.Text);
             certInUse = true;
+            statusLabel.Text = "Certificate in use";
         }
 
         private void button5_Click(object sender, EventArgs e)
@@ -42,7 +44,7 @@ namespace Hmax
             try
             {
                 cm.ResetCert(null);
-                textBoxCert.Text = "Smart Card in Use";
+                statusLabel.Text = "Smart Card in Use";
                 certInUse = false;
             }
             catch (Exception)
@@ -96,7 +98,7 @@ namespace Hmax
                     fileStream.Close();
                 }
 
-                textBoxCert.Text = "File in Use: " +openFileDialog1.FileName;
+                statusLabel.Text = "File in Use: " + openFileDialog1.FileName;
                 certInUse = false;
 
 
