@@ -61,7 +61,7 @@ namespace Hmax
             CertSubject = subject;
         }
 
-        public void SetFile(string fileHash)
+        public void SetFile(byte[] fileHash)
         {
             util = new EncryptionUtil(fileHash,"",true);
             CertSubject = null;

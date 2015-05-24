@@ -75,16 +75,23 @@ namespace Hmax
                 RIPEMD160 myRIPEMD160 = RIPEMD160Managed.Create();
                 byte[] hashValue;
 
+#if DEBUG
+                Console.WriteLine(userClickedOK);
+#endif
                 // Process input if the user clicked OK.
-                if (userClickedOK == DialogResult.Yes)
+                if (userClickedOK == DialogResult.OK)
                 {
                     // Open the selected file to read.
                     FileStream fileStream = new FileStream(openFileDialog1.FileName, FileMode.Open);
                     fileStream.Position = 0;
                     // Compute the hash of the fileStream.
                     hashValue = myRIPEMD160.ComputeHash(fileStream);
-                    hashstring = PrintByteArray(hashValue);
-                    cm.SetFile(hashstring);
+                    
+
+                    cm.SetFile(hashValue);
+#if DEBUG
+                    Console.WriteLine("hash=" + PrintByteArray(hashValue));
+#endif
                     cm.Path = openFileDialog1.FileName;
                     fileStream.Close();
                 }

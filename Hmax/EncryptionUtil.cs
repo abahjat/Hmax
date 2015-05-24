@@ -63,12 +63,12 @@ namespace Hmax
             }
         }
 
-        public EncryptionUtil(string subject, string path,bool hash)
+        public EncryptionUtil(byte[] key, string path,bool hash)
         {
             if (hash)
             {
                 certAvail = false;
-                keyAndIvBytes = StringToByteArray(subject); 
+                keyAndIvBytes = key;
             }
             else
             {
