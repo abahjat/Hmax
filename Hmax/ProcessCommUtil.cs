@@ -1,17 +1,7 @@
 ﻿using System;
-using System.CodeDom;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.IO;
-using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
-using System.Text.RegularExpressions;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 using NDde.Client;
-using System.Windows.Automation;
-using System.Text;
 
 namespace Hmax
 {
@@ -61,4 +51,13 @@ namespace Hmax
         }
 
     }
+    /*
+    class Profile
+    {
+        private String name;
+        private String color;
+        private String iconPath;
+        private String key;
+    }
+     */
 }

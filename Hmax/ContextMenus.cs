@@ -1,14 +1,10 @@
 ﻿using System;
 using System.Diagnostics;
 using System.Windows.Forms;
-using System.Drawing;
 using Hmax.Properties;
-using System.ComponentModel;
-using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Windows.Input;
 using System.Text;
-using System.Text.RegularExpressions;
 
 namespace Hmax
 {
