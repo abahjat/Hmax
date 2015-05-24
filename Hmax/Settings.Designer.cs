@@ -39,9 +39,11 @@
             this.button5 = new System.Windows.Forms.Button();
             this.textBoxChar = new System.Windows.Forms.TextBox();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.label4 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
+            this.label4 = new System.Windows.Forms.Label();
             this.textBox1 = new System.Windows.Forms.TextBox();
+            this.button4 = new System.Windows.Forms.Button();
+            this.label6 = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -128,7 +130,7 @@
             // 
             // button5
             // 
-            this.button5.Location = new System.Drawing.Point(372, 57);
+            this.button5.Location = new System.Drawing.Point(152, 57);
             this.button5.Name = "button5";
             this.button5.Size = new System.Drawing.Size(139, 21);
             this.button5.TabIndex = 24;
@@ -146,6 +148,8 @@
             // panel1
             // 
             this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel1.Controls.Add(this.label6);
+            this.panel1.Controls.Add(this.button4);
             this.panel1.Controls.Add(this.label5);
             this.panel1.Controls.Add(this.button5);
             this.panel1.Controls.Add(this.button2);
@@ -156,6 +160,15 @@
             this.panel1.Size = new System.Drawing.Size(523, 89);
             this.panel1.TabIndex = 26;
             // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(118, 61);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(19, 13);
+            this.label5.TabIndex = 25;
+            this.label5.Text = "Or";
+            // 
             // label4
             // 
             this.label4.AutoSize = true;
@@ -165,15 +178,6 @@
             this.label4.TabIndex = 27;
             this.label4.Text = "Private Key";
             // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(231, 61);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(19, 13);
-            this.label5.TabIndex = 25;
-            this.label5.Text = "Or";
-            // 
             // textBox1
             // 
             this.textBox1.Location = new System.Drawing.Point(19, 297);
@@ -182,6 +186,25 @@
             this.textBox1.TabIndex = 29;
             this.textBox1.Text = "Test your default password here.";
             this.textBox1.Enter += new System.EventHandler(this.textBox1_Enter);
+            // 
+            // button4
+            // 
+            this.button4.Location = new System.Drawing.Point(370, 54);
+            this.button4.Name = "button4";
+            this.button4.Size = new System.Drawing.Size(94, 23);
+            this.button4.TabIndex = 26;
+            this.button4.Text = "Use Regular File";
+            this.button4.UseVisualStyleBackColor = true;
+            this.button4.Click += new System.EventHandler(this.button4_Click);
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(323, 60);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(19, 13);
+            this.label6.TabIndex = 27;
+            this.label6.Text = "Or";
             // 
             // SettingsForm
             // 
@@ -222,5 +245,7 @@
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.Button button4;
+        private System.Windows.Forms.Label label6;
     }
 }

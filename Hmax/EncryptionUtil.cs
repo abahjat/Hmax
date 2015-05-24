@@ -12,7 +12,9 @@ namespace Hmax
         private readonly X509Certificate2 cert;
         //private static RNGCryptoServiceProvider rngCsp = new RNGCryptoServiceProvider();
         private readonly RSACryptoServiceProvider rngCsp;
-        private byte[] keyAndIvBytes = new byte[16];
+        private byte[] keyAndIvBytes;
+        private bool certAvail = true;
+
         //This constructor is added for those who wants to experiement with the tool without actual certificate
         public EncryptionUtil()
         {
@@ -61,10 +63,18 @@ namespace Hmax
             }
         }
 
-        public EncryptionUtil(string subject, string path)
+        public EncryptionUtil(string subject, string path,bool hash)
         {
-            cert = new X509Certificate2(path);
-            rngCsp = (RSACryptoServiceProvider) cert.PrivateKey;
+            if (hash)
+            {
+                certAvail = false;
+                keyAndIvBytes = StringToByteArray(subject); 
+            }
+            else
+            {
+                cert = new X509Certificate2(path);
+                rngCsp = (RSACryptoServiceProvider) cert.PrivateKey;
+            }
         }
 
         public string ByteArrayToHexString(byte[] ba)
@@ -100,10 +110,19 @@ namespace Hmax
         {
             var inputBytes = Encoding.UTF8.GetBytes(inputText); //AbHLlc5uLone0D1q
             //return rngCsp.Encrypt(inputBytes,false); //updated to RSA now
-            var blobSeed = rngCsp.ExportCspBlob(false);
-            var blob = rngCsp.SignData(blobSeed, new SHA1CryptoServiceProvider());
             byte[] result = null;
             var rgbIV = Encoding.UTF8.GetBytes("tR7Nr6wZbXjYMCuVaAGWNLIO");
+            byte[] blob;
+
+            if (certAvail)
+            {
+                var blobSeed = rngCsp.ExportCspBlob(false);
+                blob = rngCsp.SignData(blobSeed, new SHA1CryptoServiceProvider());
+            }
+            else
+            {
+                blob = keyAndIvBytes;
+            }
             //Console.WriteLine(blob.Length);
 
             using (var memoryStream = new MemoryStream())
@@ -163,12 +182,12 @@ namespace Hmax
         public string getHMAC5(string message)
         {
             //key = GetRandomNumber(3000, 4000);
-
+            string hmac5 = "";
             var encoding = new ASCIIEncoding();
 
             //byte[] keyByte = cert.Export(X509ContentType.Pkcs12); //keyAndIvBytes;// = UTF8Encoding.UTF8.GetBytes("tR7nR6wZbGjYMCuV"); //encoding.GetBytes(key);
 
-            //HMACSHA512 hmacsha512 = new HMACSHA512(keyByte);
+            
             var sha1 = new SHA1Managed();
 
             var messageBytes = encoding.GetBytes(message);
@@ -176,8 +195,17 @@ namespace Hmax
 
             var hashmessage = sha1.ComputeHash(messageBytes); //hmacsha512.ComputeHash(messageBytes);
 
-            var signedBytes = rngCsp.SignHash(hashmessage, CryptoConfig.MapNameToOID("SHA1"));
-            var hmac5 = ByteToString(signedBytes);
+            if (certAvail)
+            {
+                var signedBytes = rngCsp.SignHash(hashmessage, CryptoConfig.MapNameToOID("SHA1"));
+                hmac5 = ByteToString(signedBytes);
+            }
+            else
+            {
+                HMACSHA512 hmacsha512 = new HMACSHA512(keyAndIvBytes);
+                hmac5 = ByteToString(hmacsha512.ComputeHash(hashmessage));
+            }
+            
 
             return hmac5;
         }

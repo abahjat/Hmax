@@ -30,7 +30,7 @@ namespace Hmax
 
         private string charString =
             "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789~!@#$%^&*()_-+=<>;:[]?.,|/`";
-
+        public string Path { get; set; }
         private ToolStripMenuItem Deactivate;
         private ToolStripMenuItem Exit;
         private UserActivityHook hook;
@@ -59,6 +59,12 @@ namespace Hmax
         {
             util = subject == null ? new EncryptionUtil() : new EncryptionUtil(subject);
             CertSubject = subject;
+        }
+
+        public void SetFile(string fileHash)
+        {
+            util = new EncryptionUtil(fileHash,"",true);
+            CertSubject = null;
         }
 
         /// <summary>
