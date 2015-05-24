@@ -5,17 +5,16 @@ using NDde.Client;
 
 namespace Hmax
 {
-    class ProcessCommUtil
+    internal class ProcessCommUtil
     {
-        
         public static string GetBrowserURL(string browser)
         {
             try
             {
-                DdeClient dde = new DdeClient(browser, "WWW_GetWindowInfo");
+                var dde = new DdeClient(browser, "WWW_GetWindowInfo");
                 dde.Connect();
-                string url = dde.Request("URL", int.MaxValue);
-                string[] text = url.Split(new string[] { "\",\"" }, StringSplitOptions.RemoveEmptyEntries);
+                var url = dde.Request("URL", int.MaxValue);
+                var text = url.Split(new[] {"\",\""}, StringSplitOptions.RemoveEmptyEntries);
                 dde.Disconnect();
                 return text[0].Substring(1);
             }
@@ -26,19 +25,16 @@ namespace Hmax
         }
 
         [DllImport("user32.dll")]
-
-        static extern int GetForegroundWindow();
+        private static extern int GetForegroundWindow();
 
         [DllImport("user32.dll")]
-
-        static extern int GetWindowText(int hWnd, StringBuilder text, int count);
+        private static extern int GetWindowText(int hWnd, StringBuilder text, int count);
 
         public static string GetActiveWindow()
         {
-
             const int nChars = 256;
-            int handle = 0;
-            StringBuilder Buff = new StringBuilder(nChars);
+            var handle = 0;
+            var Buff = new StringBuilder(nChars);
 
             handle = GetForegroundWindow();
 
@@ -47,10 +43,9 @@ namespace Hmax
                 return Buff.ToString();
             }
             return "";
-
         }
-
     }
+
     /*
     class Profile
     {

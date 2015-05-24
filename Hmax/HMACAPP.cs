@@ -1,13 +1,13 @@
-﻿using Hmax.Properties;
-using System;
+﻿using System;
 using System.Windows.Forms;
+using Hmax.Properties;
 
 namespace Hmax
 {
-    class HMACAPP:IDisposable
+    internal class HMACAPP : IDisposable
     {
-        private NotifyIcon applicationIcon;
-        private static HMACAPP app = new HMACAPP();
+        private static readonly HMACAPP app = new HMACAPP();
+        private readonly NotifyIcon applicationIcon;
 
         private HMACAPP()
         {
@@ -29,21 +29,16 @@ namespace Hmax
             applicationIcon.Visible = true;
 
             // Attach a context menu.
-            ContextMenus contextMenu = new ContextMenus();
-            applicationIcon.ContextMenuStrip =  contextMenu.Create();
+            var contextMenu = new ContextMenus();
+            applicationIcon.ContextMenuStrip = contextMenu.Create();
 
-            Form profileForm = new Form();
-            
-                
+            var profileForm = new Form();
         }
-
 
         public void setApplicationIconToActivated()
         {
-
-                applicationIcon.Icon = Resources.bullet_green1;
-                applicationIcon.Text = "Password Converter Activated";
-         
+            applicationIcon.Icon = Resources.bullet_green1;
+            applicationIcon.Text = "Password Converter Activated";
         }
 
         public void setApplicationIconToDeactivated()

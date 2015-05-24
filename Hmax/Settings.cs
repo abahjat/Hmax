@@ -5,7 +5,8 @@ namespace Hmax
 {
     public partial class SettingsForm : Form
     {
-        private ContextMenus cm;
+        private readonly ContextMenus cm;
+
         public SettingsForm(ContextMenus cmObj)
         {
             cm = cmObj;
