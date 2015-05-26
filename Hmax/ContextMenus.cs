@@ -184,9 +184,12 @@ namespace Hmax
                 string domain = "", activeWindow;
                 if (Convert.ToInt32(e.KeyChar) == 13 || e.KeyChar == '\t')
                 {
+
 #if DEBUG
                     var stopwatch = Stopwatch.StartNew();
 #endif
+                    e.Handled = true;
+                    deactivate();
                     lenMentalPwd = stronPss.Length;
                     //Console.WriteLine(ProcessCommUtil.GetActiveWindow());
 
@@ -247,8 +250,7 @@ namespace Hmax
 
                     var backspaces = getBackSpaces(lenMentalPwd);
 
-                    e.Handled = true;
-                    deactivate();
+                    
                     if (Convert.ToInt32(e.KeyChar) == 13)
                     {
                         sendKeyStrokeToActiveWindow(backspaces + stronPss + "{ENTER}");
