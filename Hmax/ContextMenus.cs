@@ -446,6 +446,7 @@ namespace Hmax
         {
             // Quit without further ado.
             hook.Stop();
+            HMACAPP.getHMACAPP().nullifyApplicationIcon();
             Application.Exit();
         }
 

@@ -41,6 +41,13 @@ namespace Hmax
             applicationIcon.Text = "Password Converter Activated";
         }
 
+        public void nullifyApplicationIcon()
+        {
+            //applicationIcon.Icon = null;
+            applicationIcon.BalloonTipClosed += (sender, e) => { var thisIcon = (NotifyIcon)sender; 
+                thisIcon.Visible = false; thisIcon.Dispose(); }; 
+        }
+
         public void setApplicationIconToDeactivated()
         {
             applicationIcon.Icon = Resources.bullet_red1;
