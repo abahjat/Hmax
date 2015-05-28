@@ -444,7 +444,6 @@ namespace Hmax
         /// <param name="e">The <see cref="System.EventArgs" /> instance containing the event data.</param>
         private void Exit_Click(object sender, EventArgs e)
         {
-            // Quit without further ado.
             hook.Stop();
             HMACAPP.getHMACAPP().nullifyApplicationIcon();
             Application.Exit();
