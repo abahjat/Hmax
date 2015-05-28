@@ -11,3 +11,6 @@ The certificate will be automatically imported to your Windows Certificate Store
 
 You will find the certificate under Personal Certificates folder.
 
+------------------------------------------------------------------------
+
+![Alt text](http://mason.gmu.edu/~abahjat/Hmax.png "Hmax Settings")
